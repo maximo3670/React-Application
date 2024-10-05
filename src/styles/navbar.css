@@ -1,0 +1,97 @@
+/* navbar.css */
+
+/* Reset margin and padding for body to remove whitespace around the navbar */
+body {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+/* Navbar styling */
+nav {
+    background-color: #003c4c; /* Deep ocean blue */
+    display: flex;
+    align-items: center; /* Center items vertically */
+    padding: 10px 0; /* Add vertical padding for more height */
+    min-height: 60px; /* Set a minimum height for the navbar */
+    font-size: 130%;
+    position: relative; /* For positioning the dropdown */
+}
+
+/* Logo container styling */
+.logo-container {
+    margin-left: 15px; /* Margin for logo */
+}
+
+/* Toggle button for mobile menu */
+.menu-toggle {
+    display: none; /* Hide by default */
+    font-size: 30px; /* Icon size */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+/* Navigation links */
+nav ul {
+    list-style: none; /* Remove bullet points */
+    display: flex; /* Align items in a row */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+/* Style for list items */
+nav li {
+    margin: 0 15px; /* Space between buttons */
+}
+
+/* Style for the buttons */
+.buttons {
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* Text color */
+    padding: 10px 15px; /* Padding inside the buttons */
+    border: 2px solid transparent; /* Border for buttons */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, border-color 0.3s; /* Transition effect */
+}
+
+/* Only apply hover effect to buttons */
+.buttons:hover {
+    background-color: #005f75; /* Lighter blue on hover */
+    border-color: white; /* Change border color on hover */
+}
+
+/* Style for the logo */
+.logo {
+    height: 60px; /* Set the height of the logo */
+}
+
+/* Prevent hover effects on the logo */
+nav li img {
+    pointer-events: none; /* Disable pointer events for the logo */
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Show toggle button on smaller screens */
+        position: absolute;
+        right: 10px;
+    }
+
+    nav ul {
+        display: none; /* Hide links by default */
+        flex-direction: column; /* Stack links vertically */
+        position: absolute; /* Position relative to the navbar */
+        top: 100%; /* Position below the navbar */
+        left: 0; /* Align to the left */
+        background-color: #003c4c; /* Same background as navbar */
+        width: 100%; /* Full width */
+        z-index: 1; /* Ensure it appears above other elements */
+    }
+
+    nav ul.active {
+        display: flex; /* Show links when active */
+    }
+
+    nav li {
+        margin: 10px 0; /* Margin for list items in dropdown */
+    }
+}
