@@ -2,6 +2,7 @@
 
 .modal-overlay {
     position: fixed; /* Fixed positioning to cover the entire screen */
+    text-align: center;
     top: 0; /* Align to the top */
     left: 0; /* Align to the left */
     right: 0; /* Align to the right */
@@ -45,10 +46,10 @@
     border-color: white; /* Change border color on hover */
 }
 
-/* Style for input fields */
-input[type="text"],
-input[type="password"] {
-    width: 80%; /* Full width of the modal */
+/* Style for modal input fields */
+#modalUsername,
+#modalPassword {
+    width: 80%; /* Adjust width */
     padding: 12px; /* Increase padding for larger input height */
     border: 2px solid transparent; /* Transparent border */
     border-radius: 5px; /* Rounded corners */
@@ -57,25 +58,26 @@ input[type="password"] {
     font-size: 16px; /* Increase font size */
 }
 
-/* Style for input fields on focus */
-input[type="text"]:focus,
-input[type="password"]:focus {
+/* Style for modal input fields on focus */
+#modalUsername:focus,
+#modalPassword:focus {
     border: 2px solid #007f92; /* Border color on focus */
     outline: none; /* Remove default outline */
-    background-color: #006f80; /* Slightly darker background on focus (optional) */
+    background-color: #006f80; /* Slightly darker background on focus */
 }
 
-.register-link {
+.login-link {
     margin-top: 10px;
     font-size: 14px;
+    font-weight: bold;
   }
   
-  .register-link a {
-    color: #8a3381; /* Lighter blue for link */
+  .login-link a {
+    color: #d534eb; 
     text-decoration: none;
     font-weight: bold;
   }
   
-  .register-link a:hover {
+  .login-link a:hover {
     text-decoration: underline; /* Underline on hover */
   }
