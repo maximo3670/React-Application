@@ -1,0 +1,81 @@
+/* modal.css */
+
+.modal-overlay {
+    position: fixed; /* Fixed positioning to cover the entire screen */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    right: 0; /* Align to the right */
+    bottom: 0; /* Align to the bottom */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    display: flex; /* Center the modal */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+.modal-content {
+    color: white;
+    background-color: #003c4c; /* White background for modal content */
+    padding: 20px; /* Padding inside the modal */
+    border-radius: 5px; /* Rounded corners */
+    width: 300px; /* Set a fixed width */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add some shadow */
+}
+
+.close-modal {
+    margin-top: 10px; /* Space above the close button */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.modalbuttons {
+    margin-top: 5%;
+    background-color: transparent;
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* Text color */
+    padding: 10px 15px; /* Padding inside the buttons */
+    border-color: white;
+    border: 2px solid; /* Border for buttons */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, border-color 0.3s; /* Transition effect */
+}
+
+/* Only apply hover effect to buttons */
+.modalbuttons:hover {
+    background-color: #005f75; /* Lighter blue on hover */
+    border-color: white; /* Change border color on hover */
+}
+
+/* Style for input fields */
+input[type="text"],
+input[type="password"] {
+    width: 80%; /* Full width of the modal */
+    padding: 12px; /* Increase padding for larger input height */
+    border: 2px solid transparent; /* Transparent border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #005f75; /* Background color for inputs */
+    color: white; /* Text color inside the inputs */
+    font-size: 16px; /* Increase font size */
+}
+
+/* Style for input fields on focus */
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border: 2px solid #007f92; /* Border color on focus */
+    outline: none; /* Remove default outline */
+    background-color: #006f80; /* Slightly darker background on focus (optional) */
+}
+
+.register-link {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .register-link a {
+    color: #8a3381; /* Lighter blue for link */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
