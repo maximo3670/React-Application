@@ -43,6 +43,18 @@ function Register(){
                     required />
                 </div>
                 <div>
+                    <label>Please provide a valid email address</label>
+                </div>
+                <div>
+                    <input 
+                    type="text" 
+                    id="email"
+                    className='registerInput'
+                    name="email" 
+                    placeholder='Email Address'
+                    required />
+                </div>
+                <div>
                     <label htmlFor="password">Choose a strong password</label>
                 </div>
                 <div>
@@ -62,6 +74,9 @@ function Register(){
                     name="password" 
                     placeholder='Confirm Password'
                     required />
+                </div>
+                <div>
+                    <button type="submit" className="modalbuttons">Sign Up</button>
                 </div>
                 </form>
             </div>

@@ -19,11 +19,11 @@ const Modal = ({ isOpen, onClose }) => {
             <label htmlFor="password">Password:</label>
             <input type="password" id="modalPassword" name="password" required />
           </div>
-          <button type="submit" className="modalbuttons">Login</button> {/* Added class for consistent styling */}
+          <Link to="/" onClick={onClose}><button type="submit" className="modalbuttons" >Login</button></Link>  {/* Added class for consistent styling */}
         </form>
         <button className="modalbuttons" onClick={onClose}>Close</button> {/* Added class for consistent styling */}
         <p className="register-link">
-          Don't have an account? <Link to="/register">Register here</Link>
+          Don't have an account? <Link to="/register" onClick={onClose}>Register here</Link>
         </p>
       </div>
     </div>

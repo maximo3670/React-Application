@@ -1,6 +1,6 @@
 import React from 'react';
 
-function About() {
+function Howthisworks() {
     return (
       <div>
         <h1>Welcome to My Website</h1>
@@ -9,4 +9,4 @@ function About() {
     );
   }
   
-  export default About;
+  export default Howthisworks;

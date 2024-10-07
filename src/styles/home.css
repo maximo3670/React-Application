@@ -1,0 +1,86 @@
+/* Custom styles for the slick carousel arrows */
+.slick-prev,
+.slick-next {
+    width: 40px; /* Adjust arrow size */
+    height: 40px; /* Adjust arrow size */
+    z-index: 2; /* Ensure arrows are above the image */
+    top: 50%; /* Center the arrows vertically */
+    transform: translate(0, -50%); /* Vertically center with transformation */
+    background-color: transparent;
+    border-radius: 50%; /* Make the arrows circular */
+    color: white; /* White arrow color */
+    border: none; /* Remove default border */
+}
+
+/* Position arrows within the banner */
+.slick-prev {
+    left: 15px; /* Position the left arrow 15px from the left edge */
+}
+
+.slick-next {
+    right: 15px; /* Position the right arrow 15px from the right edge */
+}
+
+/* Styling the slick dots */
+.slick-dots {
+    position: absolute; /* Make sure they are positioned over the image */
+    bottom: 20px; /* Position them 20px from the bottom of the image */
+    width: 100%; /* Center the dots horizontally */
+    display: flex; /* Use flexbox to align dots */
+    justify-content: center; /* Center the dots horizontally */
+    z-index: 1; /* Make sure they appear over the image */
+}
+
+/* Styling individual dots */
+.slick-dots li button:before {
+    font-size: 12px; /* Size of the dots */
+    color: white; /* White color for the dots */
+    opacity: 0.75; /* Semi-transparent for inactive dots */
+    transition: opacity 0.3s; /* Smooth transition */
+}
+
+/* Make the active dot more visible */
+.slick-dots li.slick-active button:before {
+    opacity: 1; /* Fully visible for the active dot */
+    color: white; /* Keep the active dot white */
+}
+
+/* Optional: increase size of the active dot */
+.slick-dots li.slick-active button:before {
+    font-size: 14px; /* Slightly larger active dot */
+}
+
+#home-container {
+    width: 70%;
+    margin: 0 auto;
+    border: 2px solid #003c4c;
+    background-color: #003c4c;
+    padding: 5%;
+    display: block;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+#button-container {
+    margin-top: 100px; /* Ensure there's space above the button */
+}
+
+#home-container p {
+    margin-bottom: 20px; /* Space below each paragraph */
+}
+
+.buttons {
+    background-color: transparent;
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* Text color */
+    padding: 10px 15px; /* Padding inside the buttons */
+    border-color: white;
+    border: 2px solid; /* Border for buttons */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, border-color 0.3s; /* Transition effect */
+}
+
+/* Only apply hover effect to buttons */
+.buttons:hover {
+    background-color: #005f75; /* Lighter blue on hover */
+    border-color: white; /* Change border color on hover */
+}

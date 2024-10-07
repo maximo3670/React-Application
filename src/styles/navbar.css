@@ -29,10 +29,10 @@ nav {
 
 /* Navigation links */
 nav ul {
-    list-style: none; /* Remove bullet points */
-    display: flex; /* Align items in a row */
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margin */
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
 }
 
 /* Style for list items */
@@ -41,7 +41,7 @@ nav li {
 }
 
 /* Style for the buttons */
-.buttons {
+.navbuttons {
     text-decoration: none; /* Remove underline from links */
     color: white; /* Text color */
     padding: 10px 15px; /* Padding inside the buttons */
@@ -51,7 +51,7 @@ nav li {
 }
 
 /* Only apply hover effect to buttons */
-.buttons:hover {
+.navbuttons:hover {
     background-color: #005f75; /* Lighter blue on hover */
     border-color: white; /* Change border color on hover */
 }
@@ -64,6 +64,17 @@ nav li {
 /* Prevent hover effects on the logo */
 nav li img {
     pointer-events: none; /* Disable pointer events for the logo */
+}
+
+.profile-container {
+    list-style: none;
+    margin-left: auto; /* Ensures it's pushed to the far right */
+}
+
+.profile-icon {
+    width: 12px; /* Adjust the size of the image/icon */
+    height: 24px;
+    vertical-align: middle; /* Align it properly with text if needed */
 }
 
 /* Mobile responsive styles */
@@ -92,4 +103,17 @@ nav li img {
     nav li {
         margin: 10px 0; /* Margin for list items in dropdown */
     }
+
+        /* Adjusting profile icon */
+        .profile-container {
+            position: absolute;
+            right: 50px; /* Moves the profile icon to the left of the hamburger */
+            top: 50%;
+            transform: translateY(-50%); /* Align it vertically */
+        }
+    
+        .profile-icon {
+            width: 15px; /* Adjust the size of the profile icon */
+            height: 30px;
+        }
 }

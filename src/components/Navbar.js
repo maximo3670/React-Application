@@ -35,12 +35,13 @@ function Navbar() {
         &#9776; {/* This is the hamburger icon */}
       </div>
       <ul className={`nav-links ${isDropdownOpen ? 'active' : ''}`}>
-        <li><Link to="/" className='buttons'>Home</Link></li>
-        <li><Link to="/about" className='buttons'>About</Link></li>
-        <li><Link to="/whatwedo" className='buttons'>What We Do</Link></li>
-        <li><Link to="/contact" className='buttons'>Contact</Link></li>
-        <li><Link to="#" onClick={openModal} className='buttons'>Login</Link></li> {/* Changed to Link */}
+        <li><Link to="/howthisworks" className='navbuttons'>How this works</Link></li>
       </ul>
+      <li className="profile-container">
+          <Link to="#" onClick={openModal} className="navbuttons">
+            <i className="fas fa-user profile-icon"></i>
+          </Link>
+        </li>
     </nav>
     <Modal isOpen={isModalOpen} onClose={closeModal} />
   </> 
