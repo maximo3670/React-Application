@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from '../components/Modal'; 
 import '../styles/register.css'
+import axios from 'axios';
 
 function Register(){
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      });
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -12,6 +19,43 @@ function Register(){
     
       const closeModal = () => {
         setIsModalOpen(false);
+      };
+
+      const handleChange = (e) => {
+        setFormData({
+          ...formData,
+          [e.target.name]: e.target.value,
+        });
+      };
+  
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+  
+        // Check if password and confirmPassword match
+        if (formData.password !== formData.confirmPassword) {
+          alert("Passwords do not match");
+          return;
+        }
+  
+        try {
+          const response = await axios.post('http://localhost:5000/register', {
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          });
+          console.log('Form Data Submitted:', formData);
+          console.log(response.data); // User saved in the database
+            setFormData({
+                username: '',
+                email: '',
+                password: '',
+                confirmPassword: ''
+            });
+            alert("User registered successfully!");
+        } catch (error) {
+          console.error('Error during registration:', error);
+          alert("Registration failed.");
+        }
       };
 
     return(
@@ -29,7 +73,7 @@ function Register(){
                     Already have an account? <Link to="#" onClick={openModal}>Login here</Link>
                     </p>
                 </div>
-                <form>
+                <form onSubmit={handleSubmit}>
                 <div>
                 <label htmlFor="username">Choose a unique username. This will be used to login.</label>
                 </div>
@@ -40,6 +84,8 @@ function Register(){
                     className='registerInput'
                     name="username" 
                     placeholder='Username'
+                    value={formData.username}
+                    onChange={handleChange}
                     required />
                 </div>
                 <div>
@@ -52,6 +98,8 @@ function Register(){
                     className='registerInput'
                     name="email" 
                     placeholder='Email Address'
+                    value={formData.email}
+                    onChange={handleChange}
                     required />
                 </div>
                 <div>
@@ -64,15 +112,19 @@ function Register(){
                     className='registerInput'
                     name="password" 
                     placeholder='Password'
+                    value={formData.password}
+                    onChange={handleChange}
                     required />
                 </div>
                 <div>
                     <input 
                     type="password" 
-                    id="password" 
+                    id="confirmPassword" 
                     className='registerInput'
-                    name="password" 
+                    name="confirmPassword" 
                     placeholder='Confirm Password'
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
                     required />
                 </div>
                 <div>
