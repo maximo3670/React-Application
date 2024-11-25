@@ -13,6 +13,7 @@ const port = 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
+
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -72,17 +73,12 @@ app.post('/login', async (req, res) => {
     const userResult = await pool.query(userQuery, [username]);
     const user = userResult.rows[0];
 
-    console.log(username, password);
-    console.log(user);
-
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
     }
 
     // Check if the password matches
     const passwordMatch = await bcrypt.compare(password, user.password);
-
-    console.log(passwordMatch)
 
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
@@ -98,9 +94,36 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Search workouts based on the name
+app.get('/searchWorkouts', async (req, res) => {
+  const searchQuery = req.query.query; // Get the search query from the query parameters
+
+  if (!searchQuery) {
+    return res.status(400).json({ message: 'Search query is required' });
+  }
+
+  try {
+    // Use a case-insensitive search (ILIKE for PostgreSQL)
+    const query = `
+      SELECT id AS workout_id, name AS workout_name, body_part 
+      FROM workouts
+      WHERE name ILIKE $1  -- Use ILIKE for case-insensitive matching
+      ORDER BY name ASC;
+    `;
+    
+    // Run the query with the search term surrounded by wildcards to match any part of the name
+    const result = await pool.query(query, [`%${searchQuery}%`]);
+
+    res.json(result.rows); // Send back the matching workouts
+  } catch (error) {
+    console.error('Error searching workouts:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 // Get workouts for a user
-app.get('/geWorkouts', async (req, res) => {
+app.get('/getWorkouts', async (req, res) => {
   const userId = req.query.userId; // Pass the user ID as a query parameter
 
   if (!userId) {
@@ -108,9 +131,9 @@ app.get('/geWorkouts', async (req, res) => {
   }
 
   try {
-    // Fetch workouts linked to sessions for the user
+    // Fetch workouts linked to sessions for the user, including workout_id
     const query = `
-      SELECT s.id AS session_id, s.session_name, w.name AS workout_name, w.body_part 
+      SELECT s.id AS session_id, s.session_name, w.id AS workout_id, w.name AS workout_name, w.body_part 
       FROM sessions s
       JOIN session_workouts sw ON s.id = sw.session_id
       JOIN workouts w ON sw.workout_id = w.id
@@ -125,6 +148,7 @@ app.get('/geWorkouts', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 
 app.post('/setWorkouts', async (req, res) => {
@@ -206,6 +230,126 @@ app.post('/session_workouts', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+app.delete('/deleteWorkout', async (req, res) => {
+  const { workoutName } = req.body;
+
+  if (!workoutName) {
+    return res.status(400).json({ message: 'Workout name is required' });
+  }
+
+  try {
+    // Delete the workout from the `workouts` table
+    const deleteWorkoutQuery = `
+      DELETE FROM workouts
+      WHERE name = $1
+      RETURNING id;
+    `;
+
+    const deleteWorkoutResult = await pool.query(deleteWorkoutQuery, [workoutName]);
+
+    if (deleteWorkoutResult.rowCount === 0) {
+      return res.status(404).json({ message: 'Workout not found' });
+    }
+
+    const workoutId = deleteWorkoutResult.rows[0].id;
+
+    // Remove the workout from any session it was linked to
+    const deleteSessionWorkoutQuery = `
+      DELETE FROM session_workouts
+      WHERE workout_id = $1;
+    `;
+
+    await pool.query(deleteSessionWorkoutQuery, [workoutId]);
+
+    res.json({ message: 'Workout deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting workout:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.delete('/deleteSession', async (req, res) => {
+  const { sessionId } = req.body;
+
+  if (!sessionId) {
+    return res.status(400).json({ message: 'Session ID is required' });
+  }
+
+  try {
+    // Remove all links between this session and its workouts
+    const deleteSessionWorkoutsQuery = `
+      DELETE FROM session_workouts
+      WHERE session_id = $1;
+    `;
+
+    await pool.query(deleteSessionWorkoutsQuery, [sessionId]);
+
+    // Delete the session itself
+    const deleteSessionQuery = `
+      DELETE FROM sessions
+      WHERE id = $1;
+    `;
+
+    const deleteSessionResult = await pool.query(deleteSessionQuery, [sessionId]);
+
+    if (deleteSessionResult.rowCount === 0) {
+      return res.status(404).json({ message: 'Session not found' });
+    }
+
+    res.json({ message: 'Session deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting session:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.delete('/removeWorkoutFromSession', async (req, res) => {
+  const { sessionId, workoutId } = req.body;
+
+  if (!sessionId || !workoutId) {
+    return res.status(400).json({ message: 'Session ID and Workout ID are required' });
+  }
+
+  try {
+    // Remove the workout from the session in the `session_workouts` table
+    const query = `
+      DELETE FROM session_workouts
+      WHERE session_id = $1 AND workout_id = $2;
+    `;
+
+    const result = await pool.query(query, [sessionId, workoutId]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Workout not found in the specified session' });
+    }
+
+    res.json({ message: 'Workout removed from session successfully' });
+  } catch (error) {
+    console.error('Error removing workout from session:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.get('/checkWorkout', async (req, res) => {
+  const { name } = req.query;
+
+  try {
+    const result = await pool.query('SELECT id FROM workouts WHERE name = $1', [name]);
+
+    if (result.rows.length > 0) {
+      // Workout exists, send the ID
+      res.json({ exists: true, workout_id: result.rows[0].id });
+    } else {
+      // Workout doesn't exist
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error('Error checking workout:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 
 // Start the server

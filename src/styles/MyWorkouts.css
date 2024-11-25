@@ -1,0 +1,96 @@
+.workouts-container {
+    padding: 20px;
+  }
+  
+  .workouts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .workout-box {
+    background-color: #003c4c;
+    border: 2px solid #c5c9c1;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    height: 100px; /* Default height */
+  }
+  
+  .workout-box h2 {
+    margin: 0;
+    font-size: 30px;
+  }
+
+  .workout-box.workout-box.expanded h2 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .workout-box.expanded {
+    font-size: 18px;
+    height: auto; /* Expand to fit content */
+    background-color: #003c4c;
+    border-color: #c5c9c1;
+  }
+  
+  .workout-details {
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  .workout-item {
+    display: flex;
+    justify-content: space-between; /* This pushes the elements to the edges */
+    align-items: center; /* Ensures vertical alignment */
+  }
+  
+  .delete-session-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+  }
+  
+  .delete-session-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Style for the Delete button of workouts (to stay left) */
+  .delete-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete-button:hover {
+    background-color: #c0392b;
+  }
+
+  .edit-button{
+    margin-top: 5%;
+    background-color: transparent;
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* Text color */
+    padding: 10px 15px; /* Padding inside the buttons */
+    border-color: white;
+    border: 2px solid; /* Border for buttons */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, border-color 0.3s; /* Transition effect */
+  }
+  
+  .edit-button:hover {
+    background-color: #005f75; /* Lighter blue on hover */
+    border-color: white; /* Change border color on hover */
+  }

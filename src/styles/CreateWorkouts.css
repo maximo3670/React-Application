@@ -1,0 +1,107 @@
+.suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  .suggestions-list li {
+    padding: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  .suggestions-list li:hover {
+    background-color: #e0e0e0;
+  }
+  
+  #create-workout-form-container{
+    width: 70%;
+    margin: 0 auto;
+    border: 2px solid #003c4c;
+    background-color: #003c4c;
+    padding: 5%;
+    display: block;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+.workout-input::placeholder{
+    color: #ededed;
+    opacity: 50%;
+  }
+
+   /* Style for modal input fields */
+.workout-input{
+    margin: 4px;
+    width: 35%; /* Adjust width */
+    padding: 12px; /* Increase padding for larger input height */
+    border: 2px solid transparent; /* Transparent border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #608f9c; /* Background color for inputs */
+    color: #ededed; /* Text color inside the inputs */
+    font-size: 16px; /* Increase font size */
+}
+
+/* Style for modal input fields on focus */
+.workout-input:focus{
+    border: 2px solid #1896b8; /* Border color on focus */
+    outline: none; /* Remove default outline */
+    background-color: #7ab5c4; /* Slightly darker background on focus */
+}
+
+#add-workout-button{
+    margin-top: 5%;
+    background-color: transparent;
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* Text color */
+    padding: 10px 15px; /* Padding inside the buttons */
+    border-color: white;
+    border: 2px solid; /* Border for buttons */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, border-color 0.3s; /* Transition effect */
+  }
+  
+  #add-workout-button:hover {
+    background-color: #005f75; /* Lighter blue on hover */
+    border-color: white; /* Change border color on hover */
+  }
+
+  /* Style for the sessions dropdown (select element) */
+#sessions-dropdown {
+    margin-top: 5%;
+    background-color: transparent;
+    color: white; /* Text color */
+    padding: 10px 15px; /* Padding inside the dropdown */
+    border-color: white; /* Border color */
+    border: 2px solid; /* Border for dropdown */
+    border-radius: 5px; /* Rounded corners */
+    appearance: none; /* Remove default styling (inconsistent across browsers) */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    transition: background-color 0.3s, border-color 0.3s; /* Transition effect */
+    width: 100%; /* Make the dropdown fill the container */
+  }
+  
+  #sessions-dropdown:hover {
+    background-color: #005f75; /* Lighter blue on hover */
+    border-color: white; /* Change border color on hover */
+  }
+  
+  /* Optional: Style the dropdown's arrow */
+  #sessions-dropdown::after {
+    content: '\25BC'; /* Unicode for down arrow */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 14px;
+  }
+  
+  /* Add a container for the custom dropdown */
+  #sessions-dropdown-container {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* Adjust this according to your layout */
+  }
+  
