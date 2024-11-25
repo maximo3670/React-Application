@@ -38,11 +38,10 @@ function Home() {
       </Slider>
       </div>
       <div id='home-container'>
-          <h1>Welcome to Cliple</h1>
+          <h1>Welcome to Gym Buddy</h1>
           <div>
-            <p>Share your best gaming clips with your friends to compete for points</p>
-            <p>You will vote on each others clips to determine which is the best!</p>
-            <p>To get started create a free account today</p>
+            <p>This is a gym companion application designed to offer freedom when planning your workouts.</p>
+            <p>To get started simply create a free account below!</p>
           </div>
           <div id='button-container'>
             <Link to="/register" className='buttons'>Sign up!</Link>

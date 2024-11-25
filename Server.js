@@ -91,12 +91,122 @@ app.post('/login', async (req, res) => {
     // Generate a JWT token (store secret in env variable for security)
     const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ token, user: { id: user.id, username: user.username, email: user.email } });  // Also return some user info
+    res.json({ token, user: { id: user.id, username: user.username, email: user.email } });  
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+
+// Get workouts for a user
+app.get('/geWorkouts', async (req, res) => {
+  const userId = req.query.userId; // Pass the user ID as a query parameter
+
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
+
+  try {
+    // Fetch workouts linked to sessions for the user
+    const query = `
+      SELECT s.id AS session_id, s.session_name, w.name AS workout_name, w.body_part 
+      FROM sessions s
+      JOIN session_workouts sw ON s.id = sw.session_id
+      JOIN workouts w ON sw.workout_id = w.id
+      WHERE s.user_id = $1
+      ORDER BY s.created_at DESC;
+    `;
+    const result = await pool.query(query, [userId]);
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching workouts:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+app.post('/setWorkouts', async (req, res) => {
+  const { name, body_part } = req.body;
+
+  if (!name || !body_part) {
+    return res.status(400).json({ message: 'Workout name and body part are required.' });
+  }
+
+  try {
+    const result = await pool.query(
+      'INSERT INTO workouts (name, body_part) VALUES ($1, $2) RETURNING *',
+      [name, body_part]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error creating workout:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+app.post('/setSessions', async (req, res) => {
+  const { session_name, user_id } = req.body;
+
+  if (!session_name || !user_id) {
+    return res.status(400).json({ message: 'Session name and user ID are required.' });
+  }
+
+  try {
+    const result = await pool.query(
+      'INSERT INTO sessions (session_name, user_id) VALUES ($1, $2) RETURNING *',
+      [session_name, user_id]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error creating session:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/getSessions', async (req, res) => {
+  const { user_id } = req.body;
+
+  if (!user_id) {
+    return res.status(400).json({ message: 'User ID is required.' });
+  }
+
+  try {
+    // Assuming you have a 'sessions' table with 'user_id' and 'session_name'
+    const result = await pool.query(
+      'SELECT * FROM sessions WHERE user_id = $1',
+      [user_id]
+    );
+
+    // Respond with the session data
+    res.status(200).json(result.rows); // Return the sessions array
+  } catch (error) {
+    console.error('Error fetching sessions:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/session_workouts', async (req, res) => {
+  const { session_id, workout_id } = req.body;
+
+  if (!session_id || !workout_id) {
+    return res.status(400).json({ message: 'Session ID and Workout ID are required.' });
+  }
+
+  try {
+    await pool.query(
+      'INSERT INTO session_workouts (session_id, workout_id) VALUES ($1, $2)',
+      [session_id, workout_id]
+    );
+    res.status(201).json({ message: 'Workout added to session.' });
+  } catch (error) {
+    console.error('Error linking workout to session:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 // Start the server
 app.listen(port, () => {

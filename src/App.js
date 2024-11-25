@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import Howthisworks from './pages/HowThisWorks';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import CreateWorkouts from './pages/CreateWorkouts';
+import MyWorkouts from './pages/MyWorkouts';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/howthisworks" element={<Howthisworks />} />
         <Route path="/register" element={<Register />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/MyWorkouts' element={<MyWorkouts />} />
+        <Route path='/CreateWorkouts' element={<CreateWorkouts />} />
       </Routes>
     </Router>
   );
