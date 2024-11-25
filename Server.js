@@ -352,6 +352,46 @@ app.get('/checkWorkout', async (req, res) => {
 
 
 
+app.post('/workoutStats', async (req, res) => {
+  // Access userId from the query parameters
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
+
+  try {
+    const query = `
+        SELECT
+            w.name AS workout_name,
+            MAX(uws.weight) AS personal_best,
+            SUM(uws.reps * uws.set_number) AS total_reps,
+            SUM(uws.set_number) AS total_sets,
+            (SELECT uws2.weight
+             FROM user_workout_sets uws2
+             WHERE uws2.workout_id = w.id AND uws2.user_id = $1
+             ORDER BY uws2.created_at DESC
+             LIMIT 1) AS last_weight,
+            (SELECT uws2.reps
+             FROM user_workout_sets uws2
+             WHERE uws2.workout_id = w.id AND uws2.user_id = $1
+             ORDER BY uws2.created_at DESC
+             LIMIT 1) AS last_reps
+        FROM workouts w
+        JOIN user_workout_sets uws ON uws.workout_id = w.id
+        WHERE uws.user_id = $1
+        GROUP BY w.id, w.name;
+    `;
+
+    const result = await pool.query(query, [userId]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching workout statistics');
+  }
+});
+
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

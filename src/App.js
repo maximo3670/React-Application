@@ -7,7 +7,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import CreateWorkouts from './pages/CreateWorkouts';
 import MyWorkouts from './pages/MyWorkouts';
-
+import WorkoutStats from './pages/WorkoutStats';
 function App() {
   return (
     <Router>
@@ -19,6 +19,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/MyWorkouts' element={<MyWorkouts />} />
         <Route path='/CreateWorkouts' element={<CreateWorkouts />} />
+        <Route path='/Stats' element={<WorkoutStats />} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,9 @@
 TO DO:
-Creating workouts and workout sessions
-Front end MyWorkouts and CreateWorkouts
+
+Begin workout button on MyWorkouts.
+Page to input weights etc of a workout.
+database to store the information.
+
 Finish Login with token/session creation
 Link logged in user with what needs to be displayed. E.G. MyWorkouts
 Profile Page
