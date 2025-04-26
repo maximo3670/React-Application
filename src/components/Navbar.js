@@ -35,10 +35,11 @@ function Navbar() {
         &#9776; {/* This is the hamburger icon */}
       </div>
       <ul className={`nav-links ${isDropdownOpen ? 'active' : ''}`}>
-        <li><Link to="/howthisworks" className='navbuttons'>How this works</Link></li>
+        {/*<li><Link to="/howthisworks" className='navbuttons'>How this works</Link></li>*/}
         <li><Link to="/MyWorkouts" className='navbuttons'>My Workouts</Link></li>
         <li><Link to="/CreateWOrkouts" className='navbuttons'>Create Workout</Link></li>
-        <li><li><Link to="/Stats" className='navbuttons'>Workout Statistics</Link></li></li>
+        <li><Link to="/Stats" className='navbuttons'>Workout Statistics</Link></li>
+        <li><Link to="/InputWorkout" className='navbuttons'>Input A Workout</Link></li>
       </ul>
       <li className="profile-container">
           <Link to="#" onClick={openModal} className="navbuttons">

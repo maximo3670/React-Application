@@ -391,6 +391,23 @@ app.post('/workoutStats', async (req, res) => {
   }
 });
 
+app.post('/inputWorkout', async (req, res) => {
+  const { user_id, workoutId, sets, reps, weight } = req.body;
+
+  try {
+    const query = `
+      INSERT INTO user_workout_sets (user_id, workout_id, set_number, reps, weight)
+      VALUES ($1, $2, $3, $4, $5);
+    `;
+    await pool.query(query, [user_id, workoutId, sets, reps, weight]);
+
+    res.status(200).send('Workout data inserted successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error inserting workout data');
+  }
+});
+
 
 // Start the server
 app.listen(port, () => {
